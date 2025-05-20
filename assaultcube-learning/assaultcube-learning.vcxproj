@@ -124,11 +124,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="assaultcube-learning.cpp" />
-    <ClCompile Include="ESP.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ESP.h" />
     <ClInclude Include="Header.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="offsets.h" />
