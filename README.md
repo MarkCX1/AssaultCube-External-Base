@@ -1,6 +1,8 @@
 # AssaultCube-External-Base
 A simple AssaultCube external base for learning
 
+AssaultCube 1.3.0.2
+
 This is a WIP project. Expect a lot of issues
 
 
