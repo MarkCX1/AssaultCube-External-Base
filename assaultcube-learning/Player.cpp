@@ -15,4 +15,8 @@ void RunAmmoMod(HANDLE hProcess, DWORD localplayer) {
     //Secondary Ammo Mod
     WriteProcessMemory(hProcess, (LPVOID)(localplayer + SECONDARY_AMMO), &newAmmo, sizeof(int), nullptr);
     WriteProcessMemory(hProcess, (LPVOID)(localplayer + SECONDARY_RESERVE), &newAmmo, sizeof(int), nullptr);
+
+    //Grenade Ammo Mod
+	WriteProcessMemory(hProcess, (LPVOID)(localplayer + GRENADE_AMMO), &newAmmo, sizeof(int), nullptr);
 }
+

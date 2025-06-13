@@ -43,52 +43,53 @@ struct PlayerInfo {
 };
 
 void PrintPlayerList(HANDLE handle, DWORD baseAddress, DWORD entityList) {
+    // Get number of players from memory
+    int maxPlayers;
+    if (!ReadProcessMemory(handle, (LPCVOID)(baseAddress + 0x18AC00), &maxPlayers, sizeof(int), nullptr) || maxPlayers <= 0 || maxPlayers > 32) {
+        maxPlayers = 32; // Max players 
+    }
+    std::cout << "Max players in server: " << std::dec << maxPlayers << std::endl;
+
     // Use a set to track unique player name and health combinations
     std::set<PlayerInfo> uniquePlayers;
     int playerCount = 0;
+    std::cout << std::endl;
 
-    std::cout << "Scanning for players in lobby..." << std::endl;
-
-    // Iterate through the entity list with a reasonable upper limit
-    for (int i = 0; i < 32; ++i) { // Max 32 players for AssaultCube
+    for (int i = 0; i < maxPlayers; ++i) {
         DWORD playerPtr;
-        if (!ReadProcessMemory(handle, (LPCVOID)(entityList + (i * 4)), &playerPtr, sizeof(DWORD), nullptr) || !playerPtr) {
-            continue; // Skip invalid or null pointers
-        }
-
-        PlayerData data;
-        if (ReadPlayerData(handle, playerPtr, &data)) {
-            // Check for printable ASCII
-            bool isValid = true;
-            for (int j = 0; j < strlen(data.name); ++j) {
-                if (data.name[j] < 32 || data.name[j] > 126) {
-                    isValid = false;
-                    break;
+        if (ReadProcessMemory(handle, (LPCVOID)(entityList + (i * 4)), &playerPtr, sizeof(DWORD), nullptr) && playerPtr) {
+            PlayerData data;
+            if (ReadPlayerData(handle, playerPtr, &data)) {
+                // Check for printable ASCII
+                bool isValid = true;
+                for (int j = 0; j < strlen(data.name); ++j) {
+                    if (data.name[j] < 32 || data.name[j] > 126) {
+                        isValid = false;
+                        break;
+                    }
                 }
-            }
+                if (isValid && data.name[0] != '\0') {
+                    // Create PlayerInfo struct for this player
+                    PlayerInfo player = { std::string(data.name), data.health };
 
-            if (isValid && data.name[0] != '\0') {
-                // Create PlayerInfo struct for this player
-                PlayerInfo player = { std::string(data.name), data.health };
-
-                // Insert into set to ignore duplicates
-                if (uniquePlayers.insert(player).second) {
-                    // Print the player
-                    std::cout << "Player " << std::dec << playerCount + 1 << ": " << data.name << " (Health: ";
-                    if (data.health <= 0) {
-                        std::cout << "DEAD";
+                    // Stop the duplicate list names
+                    if (uniquePlayers.insert(player).second) {
+                        // If not a duplicate print the player
+                        std::cout << "Player " << playerCount + 1 << ": " << data.name << " (Health: ";
+                        if (data.health <= 0) {
+                            std::cout << "DEAD";
+                        }
+                        else {
+                            std::cout << data.health;
+                        }
+                        std::cout << ")" << std::endl;
+                        playerCount++;
                     }
-                    else {
-                        std::cout << std::dec << data.health;
-                    }
-                    std::cout << ")" << std::endl;
-                    playerCount++;
                 }
             }
         }
     }
-
-    std::cout << "\nTotal Players in Lobby: " << std::dec << playerCount << std::endl;
+    std::cout << "\nValid Players: " << std::dec << playerCount << std::endl;
 }
 
 int main() {
