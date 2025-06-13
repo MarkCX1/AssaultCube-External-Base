@@ -85,6 +85,16 @@
       </Offsets>
     </CheatEntry>
     <CheatEntry>
+      <ID>18</ID>
+      <Description>"Grenade_Ammo"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>4 Bytes</VariableType>
+      <Address>ac_client.exe+17E0A8</Address>
+      <Offsets>
+        <Offset>144</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
       <ID>10</ID>
       <Description>"Head_X"</Description>
       <ShowAsSigned>0</ShowAsSigned>
@@ -4807,7 +4817,9 @@
         <Element Offset="220" Vartype="Pointer" Bytesize="4" RLECount="2" OffsetHex="000000DC" DisplayMethod="unsigned integer"/>
         <Element Offset="228" Vartype="4 Bytes" Bytesize="4" OffsetHex="000000E4" DisplayMethod="hexadecimal"/>
         <Element Offset="232" Vartype="Pointer" Bytesize="4" OffsetHex="000000E8" DisplayMethod="unsigned integer"/>
-        <Element Offset="236" Vartype="4 Bytes" Bytesize="4" RLECount="64" OffsetHex="000000EC" DisplayMethod="unsigned integer"/>
+        <Element Offset="236" Vartype="4 Bytes" Bytesize="4" RLECount="31" OffsetHex="000000EC" DisplayMethod="unsigned integer"/>
+        <Element Offset="360" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000168" DisplayMethod="signed integer"/>
+        <Element Offset="364" Vartype="4 Bytes" Bytesize="4" RLECount="32" OffsetHex="0000016C" DisplayMethod="unsigned integer"/>
         <Element Offset="492" Vartype="4 Bytes" Bytesize="4" OffsetHex="000001EC" DisplayMethod="hexadecimal"/>
         <Element Offset="496" Vartype="Pointer" Bytesize="4" OffsetHex="000001F0" DisplayMethod="unsigned integer"/>
         <Element Offset="500" Vartype="4 Bytes" Bytesize="4" OffsetHex="000001F4" DisplayMethod="hexadecimal"/>
