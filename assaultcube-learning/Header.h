@@ -27,7 +27,6 @@ struct PlayerData {
 // Function declarations
 DWORD GetModuleBaseAddress(DWORD procId, const wchar_t* modName);
 bool ReadPlayerData(HANDLE hProcess, DWORD playerBase, PlayerData* data);
-bool ReadPlayerPosition(HANDLE hProcess, DWORD playerBase, Vec3* pos);
 
 // Function implementations
 inline DWORD GetModuleBaseAddress(DWORD procId, const wchar_t* modName) {
@@ -47,12 +46,6 @@ inline DWORD GetModuleBaseAddress(DWORD procId, const wchar_t* modName) {
         CloseHandle(hSnap);
     }
     return modBaseAddr;
-}
-
-inline bool ReadPlayerPosition(HANDLE hProcess, DWORD playerBase, Vec3* pos) {
-    return ReadProcessMemory(hProcess, (LPCVOID)(playerBase + PLAYER_X), &pos->x, sizeof(float), nullptr) &&
-        ReadProcessMemory(hProcess, (LPCVOID)(playerBase + PLAYER_Y), &pos->y, sizeof(float), nullptr) &&
-        ReadProcessMemory(hProcess, (LPCVOID)(playerBase + PLAYER_Z), &pos->z, sizeof(float), nullptr);
 }
 
 inline bool ReadPlayerData(HANDLE hProcess, DWORD playerBase, PlayerData* data) {

@@ -1,5 +1,6 @@
 ﻿#include "Header.h"
 #include "Player.h"
+#include "ESP.h"
 #include <iostream>
 #include <Windows.h>
 #include <ctime>
@@ -158,6 +159,9 @@ int main() {
         RunHealthMod(handle, localPlayer);
         RunAmmoMod(handle, localPlayer);
 
+        // Draw ESP
+        DrawESP(handle, hwnd, baseAddress, entityList);
+
         ULONGLONG currentTime = GetTickCount64();
         if (currentTime - lastRefresh >= refreshInterval) {
             // Clear console and move cursor to top
@@ -171,10 +175,10 @@ int main() {
             lastRefresh = currentTime;
         }
 
-        Sleep(100);
+        Sleep(1); //
     }
 
     // Cleanup
-    CloseHandle(handle);
+    CloseHandle(handle); 
     return 0;
 }
