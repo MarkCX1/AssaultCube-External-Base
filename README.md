@@ -16,3 +16,7 @@ A simple AssaultCube external base for learning
 # Feature TODO :
 - Team detection
 - Aimbot improvements
+
+# Check out the DMA version!
+
+https://github.com/MarkCX1/AssaultCube-DMA-Base/
